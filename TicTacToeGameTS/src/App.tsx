@@ -17,6 +17,7 @@ interface BoardProps {
   xIsNext: boolean;
   squares: Array<string | null>;
   onPlay: (nextSquares: Array<string | null>) => void;
+  //randomIndex: number;
 }
 
 function Board({ xIsNext, squares, onPlay }: BoardProps) {
@@ -29,7 +30,15 @@ function Board({ xIsNext, squares, onPlay }: BoardProps) {
     if (xIsNext) {
       nextSquares[i] = "X";
     } else {
-      nextSquares[i] = "O";
+      //nextSquares[i] = "O";
+      if(!calculateWinner(nextSquares) ) {
+        let randomIndex;
+        do {
+          randomIndex = Math.floor(Math.random() * 9);
+        }
+        while(nextSquares[randomIndex] !== null); //so it will repeat if square is already used
+        nextSquares[randomIndex] = "O";
+      }
     }
 
     onPlay(nextSquares);
